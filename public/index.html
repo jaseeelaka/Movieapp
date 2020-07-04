@@ -1,0 +1,178 @@
+<!DOCTYPE>
+
+<html ng-app="myApp">
+<head>
+  <style>
+.rating {
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
+}
+ul.rating {
+    display: inline-block;
+}
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    font-size:20px;
+}
+.rating .filled {
+    color: orangered;
+}
+.clear{
+  margin-top:20px;
+}
+
+
+
+
+
+  </style>
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+
+</script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <title>Movie app</title>
+</head>
+<body>
+  
+<div  class=container  ng-controller="AppCtrl">
+ <h1>MOVIE APP</h1>
+
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/action_page.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+ <h2>Rate movies</h2>
+<table class="table ">
+    <thead>
+      <tr>
+        <th>MovieName</th>         
+        <th>Actor</th>
+        <th>Actress</th>
+        <th>View</th>
+        <th>Action</th>
+        
+        <th>&nbsp;</th>
+      </tr>
+
+      <tbody>
+        <tr>
+          <td><input class="form-control" ng-model="movie.name"></td>
+          <td><input class="form-control" ng-model="movie.actor"></td>
+          <td><input class="form-control" ng-model="movie.actress"></td>
+          
+          <td><input class="form-control" ng-model="movie.link"></td>
+          
+          <td><button class="btn btn-primary" ng-click="addMovie()">Add Movie</button></td>
+          <td><button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+
+          
+
+        </tr>
+
+
+
+        <tr ng-repeat="movie in Movieslist">
+          <td>{{movie.name}}</td>
+          <td>{{movie.actor}}</td>
+          <td>{{movie.actress}}</td>
+
+          <td>
+            
+            <a ng-href="{{movie.link}}">WatchMovie</a> 
+           
+          </td>
+          
+
+          <td><button class="btn btn-danger" ng-click="remove(movie._id)">Remove</button></td>
+          <td><button class="btn btn-warning" ng-click="edit(movie._id)">Edit</button></td>
+          
+        </tr>
+        
+
+
+
+      </tbody>
+    </thead>
+    
+    <div class=col-md-12>
+      <div ng-repeat="rating in ratings">
+      <h2>{{rating.current}} /
+          {{rating.max}}</h2>
+          <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
+      </div>
+  </div>
+  <div class="col-md-12 clear">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" data-ng-click="setMinrate()">Min Rate</button>
+        <button type="button" class="btn btn-default" data-ng-click="setMaxrate()">Max Rate</button>
+      </div>
+      
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+<script src="controllers/controller.js"></script>
+
+</body>
+</html>
